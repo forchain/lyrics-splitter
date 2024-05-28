@@ -6,5 +6,6 @@ Split the long line of lyrics into multiple lines
 2. rename the lyrics file to input.lrc
 3. run
   ```shell
-  python lyrics-splitter.py
+  python split-lyrics.py
   ```
+4. save the corrected lyrics file  output.lrc
