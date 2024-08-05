@@ -1,5 +1,8 @@
 import re
 
+LINE_SIZE = 38
+ENCODING = 'gb2312'
+# ENCODING = 'utf-8'
 
 def parse_time_to_seconds(time_str):
     """将时间标签转换为秒"""
@@ -15,9 +18,9 @@ def seconds_to_time_str(seconds):
 
 
 def split_lyrics_line(line, next_line_time):
-    """递归地拆分每段歌词，确保每段长度都小于40"""
+    """递归地拆分每段歌词，确保每段长度都小于LINE_SIZE"""
 
-    if len(line) < 45:
+    if len(line) < LINE_SIZE:
         return [line]
 
     time_str, lyrics = line.split(']', 1)
@@ -31,7 +34,7 @@ def split_lyrics_line(line, next_line_time):
     current_time = original_time
 
     for word in words:
-        if len(seconds_to_time_str(current_time) + ' '.join(current_part + [word])) < 40:
+        if len(seconds_to_time_str(current_time) + ' '.join(current_part + [word])) < LINE_SIZE:
             current_part.append(word)
         else:
             # 计算当前部分的时间比例
@@ -85,7 +88,7 @@ def process_lyrics(lines):
 
 def read_lrc_file(file_path):
     """读取LRC文件"""
-    with open(file_path, 'r', encoding='utf-8') as file:
+    with open(file_path, 'r', encoding=ENCODING) as file:
         lines = file.readlines()
     return [line.strip() for line in lines]
 
